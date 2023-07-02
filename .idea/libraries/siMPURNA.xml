@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="siMPURNA">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dist/siMPURNA.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

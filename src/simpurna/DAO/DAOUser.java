@@ -13,7 +13,13 @@ import simpurna.model.UserModel;
 public interface DAOUser {
     public List<UserModel>getAll();
     
+    public List<UserModel>getInsertedThisYear();
+    
+    public UserModel getByUsername(String username); 
+    
     public List<UserModel>prosesLogin(String user, String pass);
+    
+    public List<String> getAllUsername();
     
     public void add(UserModel user);
     

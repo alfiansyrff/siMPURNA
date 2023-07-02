@@ -4,27 +4,23 @@
  */
 package simpurna.model;
 
+import java.time.LocalDateTime;
+
 /**
  *
  * @author alfia
  */
 public class UserModel {
-    private int id;
+//    private int id;
     private String name;
     private String username;
     private String pass;
     private String address;
     private String telephone;
     private String role;
+    private int kamar;
+    private LocalDateTime tglMasuk;
             
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
@@ -73,5 +69,22 @@ public class UserModel {
     public void setRole(String role) {
         this.role = role;
     }
-   
+
+    public int getKamar() {
+        return kamar;
+    }
+
+    public void setKamar(int kamar) {
+        this.kamar = kamar;
+    }
+
+    public LocalDateTime getTglMasuk() {
+        return tglMasuk;
+    }
+
+    public void setTglMasuk(LocalDateTime tglMasuk) {
+        this.tglMasuk = tglMasuk;
+    }
+    
+    
 }

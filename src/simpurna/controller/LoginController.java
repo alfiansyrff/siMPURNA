@@ -7,6 +7,7 @@ package simpurna.controller;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDate;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -17,6 +18,11 @@ import simpurna.view.DashboardAdmin;
 import simpurna.view.Login;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import simpurna.DAO.DAOAdmin;
+import simpurna.Impl.DAOImplAdmin;
+import simpurna.model.AdminModel;
+import simpurna.model.Session;
+import simpurna.view.DashboardRenter;
 
 /**
  *
@@ -25,24 +31,33 @@ import java.util.logging.Logger;
 public class LoginController {
     
     Login login;
-    DAOUser impl;
+    DAOUser implUser;
+    DAOAdmin implAdmin;
     List<UserModel> users;
+    List<AdminModel> admins;
     
     public LoginController(Login login) {
         this.login = login;
-        impl = new DAOImplUser();
+        implUser = new DAOImplUser();
+        implAdmin = new DAOImplAdmin();
     }
     
     public void cekLogin(Login loginData) {
         if(!loginData.getUsername().getText().trim().isEmpty() && !loginData.getPass().toString().isEmpty()) {
             String username = loginData.getUsername().getText();
-            String pw = get_SHA_512_SecurePassword(loginData.getPass().getText(),"puriarjuna");
+            String pwUser = get_SHA_512_SecurePassword(loginData.getPass().getText(),"puriarjuna");
+            String pwAdmin = get_SHA_512_SecurePassword(loginData.getPass().getText(),"admin");
             
-            users = impl.prosesLogin(username, pw);
             
-            if(users.size() == 1) {
-                JOptionPane.showMessageDialog(loginData, "Berhasil Login!\nSelamat datang kembali!", "Login berhasil", JOptionPane.INFORMATION_MESSAGE);
-                DashboardAdmin dbAdmin = new DashboardAdmin();
+            users = implUser.prosesLogin(username, pwUser);
+            admins = implAdmin.prosesLogin(username, pwAdmin);
+            
+            if (!admins.isEmpty()) {
+                Session session = Session.getInstance();
+                session.setUsername(username);
+                session.setRole("admin");
+                JOptionPane.showMessageDialog(loginData, "Berhasil Login!\nHalo Admin!", "Login berhasil", JOptionPane.INFORMATION_MESSAGE);
+                DashboardAdmin dbAdmin= new DashboardAdmin();
                 dbAdmin.setVisible(true);
                 JFrame frame = new JFrame();
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,9 +65,40 @@ public class LoginController {
                 frame.pack();
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
+            } else if(!users.isEmpty()) {
+                Session session = Session.getInstance();
+                session.setUsername(username);
+                session.setRole("renter");
+                JOptionPane.showMessageDialog(loginData, "Berhasil Login!\nSelamat datang kembali!", "Login berhasil", JOptionPane.INFORMATION_MESSAGE);   
+                DashboardRenter dbRenter= new DashboardRenter();
+                dbRenter.setVisible(true);
+                JFrame frame = new JFrame();
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.getContentPane().add(dbRenter);
+                frame.pack();
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);  
             } else {
-                JOptionPane.showMessageDialog(loginData, "Username atau Password salah!","Login Gagal",JOptionPane.ERROR_MESSAGE);
+               JOptionPane.showMessageDialog(loginData, "Username atau Password salah!","Login Gagal",JOptionPane.ERROR_MESSAGE); 
             }
+            
+//            if(users.size() == 1) {
+//                
+//                Session session = Session.getInstance();
+//                session.setUsername(username);
+//               
+//                JOptionPane.showMessageDialog(loginData, "Berhasil Login!\nSelamat datang kembali!", "Login berhasil", JOptionPane.INFORMATION_MESSAGE);
+//                DashboardRenter dbRenter= new DashboardRenter();
+//                dbRenter.setVisible(true);
+//                JFrame frame = new JFrame();
+//                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//                frame.getContentPane().add(dbRenter);
+//                frame.pack();
+//                frame.setLocationRelativeTo(null);
+//                frame.setVisible(true);
+//            } else {
+//                JOptionPane.showMessageDialog(loginData, "Username atau Password salah!","Login Gagal",JOptionPane.ERROR_MESSAGE);
+//            }
             
         } else {
             JOptionPane.showMessageDialog(loginData, "Username atau Password tidak boleh kosong!","Login Gagal",JOptionPane.ERROR_MESSAGE);

@@ -5,7 +5,15 @@
 package simpurna.view;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
 import javax.swing.ToolTipManager;
+import simpurna.controller.LaporanController;
+import simpurna.controller.PembayaranController;
+import simpurna.controller.PerizinanController;
+import simpurna.controller.UserController;
+import simpurna.model.Session;
 
 /**
  *
@@ -16,8 +24,17 @@ public class DashboardAdmin extends javax.swing.JPanel {
     /**
      * Creates new form dashboardAdmin
      */
+    UserController userController = new UserController();
+    PembayaranController pembayaranController = new PembayaranController();
+    PerizinanController perizinanController = new PerizinanController();
+    LaporanController laporanController = new LaporanController();
+    
     public DashboardAdmin() {
         initComponents();
+        userController.countJmlPenghuni(this);
+        pembayaranController.countPembayaranNeedConfirm(this);
+        perizinanController.countPerizinanMasuk(this);
+        laporanController.countTotalPelaporanAdmin(this);
     }
 
     /**
@@ -31,157 +48,132 @@ public class DashboardAdmin extends javax.swing.JPanel {
 
         panelDashboard = new javax.swing.JPanel();
         judul = new javax.swing.JLabel();
-        beliButton = new javax.swing.JButton();
-        jualButton = new javax.swing.JButton();
-        breedButton = new javax.swing.JButton();
-        listHewanButton = new javax.swing.JButton();
-        listPegawaiButton = new javax.swing.JButton();
-        gajiPegawaiButton = new javax.swing.JButton();
-        cekPengeluaranButton = new javax.swing.JButton();
-        beriMakanButton = new javax.swing.JButton();
-        beriVaksinButton = new javax.swing.JButton();
-        beriObatButton = new javax.swing.JButton();
-        cekKapasitasButton = new javax.swing.JButton();
+        addRenterButton = new javax.swing.JButton();
+        cekPembayaranButton = new javax.swing.JButton();
+        cekKamarButton = new javax.swing.JButton();
+        kontakPentingButton = new javax.swing.JButton();
+        listPenghuniButton = new javax.swing.JButton();
+        cekPerizinanButton = new javax.swing.JButton();
+        buatPengumumanButton = new javax.swing.JButton();
+        kelolaAdminButton = new javax.swing.JButton();
+        pelaporanButton = new javax.swing.JButton();
         panelHewanSiapJual = new javax.swing.JPanel();
         judulHewanSiapJual = new javax.swing.JLabel();
         gambarHewanSiapJual = new javax.swing.JLabel();
-        kambingSiapJual = new javax.swing.JLabel();
-        sapiSiapJual = new javax.swing.JLabel();
-        dombaSiapJual = new javax.swing.JLabel();
+        jumlahPenghuniLabel = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         panelJumlahHewan = new javax.swing.JPanel();
         judulJumlahHewan = new javax.swing.JLabel();
         gambarJumlahHewan = new javax.swing.JLabel();
-        jumlahDomba = new javax.swing.JLabel();
-        jumlahSapi = new javax.swing.JLabel();
-        jumlahKambing = new javax.swing.JLabel();
+        pembayaranBaruLabel = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         panelTotalPengeluaran = new javax.swing.JPanel();
         judulTotalPengeluaran = new javax.swing.JLabel();
-        totalPengeluaran = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        pelaporanMasukLabel = new javax.swing.JLabel();
         panelHewanButuhTindakan = new javax.swing.JPanel();
         judulHewanButuhTindakan = new javax.swing.JLabel();
         gambarHewanSiapJual1 = new javax.swing.JLabel();
-        sapiButuhTindakan = new javax.swing.JLabel();
-        kambingButuhTindakan = new javax.swing.JLabel();
-        dombaButuhTindakan = new javax.swing.JLabel();
-        akunButton = new javax.swing.JButton();
+        perizinanMasukLabel = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         logoutButton = new javax.swing.JButton();
         background = new javax.swing.JLabel();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        panelDashboard.setBackground(new java.awt.Color(221, 241, 247, 200));
+        panelDashboard.setBackground(new java.awt.Color(249, 251, 231, 199));
         panelDashboard.setPreferredSize(new java.awt.Dimension(209, 500));
 
         judul.setFont(new java.awt.Font("Cooper Black", 1, 23)); // NOI18N
-        judul.setText("VRINFARM");
+        judul.setText("siMPURNA");
 
-        beliButton.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
-        beliButton.setText("BELI");
-        beliButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        beliButton.setMaximumSize(new java.awt.Dimension(146, 26));
-        beliButton.addActionListener(new java.awt.event.ActionListener() {
+        addRenterButton.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        addRenterButton.setText("TAMBAH PENGHUNI");
+        addRenterButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addRenterButton.setMaximumSize(new java.awt.Dimension(146, 26));
+        addRenterButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                beliButtonActionPerformed(evt);
+                addRenterButtonActionPerformed(evt);
             }
         });
 
-        jualButton.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
-        jualButton.setText("JUAL");
-        jualButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jualButton.setMaximumSize(new java.awt.Dimension(146, 26));
-        jualButton.addActionListener(new java.awt.event.ActionListener() {
+        cekPembayaranButton.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        cekPembayaranButton.setText("CEK PEMBAYARAN");
+        cekPembayaranButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cekPembayaranButton.setMaximumSize(new java.awt.Dimension(146, 26));
+        cekPembayaranButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jualButtonActionPerformed(evt);
+                cekPembayaranButtonActionPerformed(evt);
             }
         });
 
-        breedButton.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
-        breedButton.setText("BREED");
-        breedButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        breedButton.setMaximumSize(new java.awt.Dimension(146, 26));
-        breedButton.addActionListener(new java.awt.event.ActionListener() {
+        cekKamarButton.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        cekKamarButton.setText("CEK KAPASITAS");
+        cekKamarButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cekKamarButton.setMaximumSize(new java.awt.Dimension(146, 26));
+        cekKamarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                breedButtonActionPerformed(evt);
+                cekKamarButtonActionPerformed(evt);
             }
         });
 
-        listHewanButton.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
-        listHewanButton.setText("LIST HEWAN");
-        listHewanButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        listHewanButton.setMaximumSize(new java.awt.Dimension(146, 26));
-        listHewanButton.addActionListener(new java.awt.event.ActionListener() {
+        kontakPentingButton.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        kontakPentingButton.setText("KONTAK PENTING");
+        kontakPentingButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        kontakPentingButton.setMaximumSize(new java.awt.Dimension(146, 26));
+        kontakPentingButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                listHewanButtonActionPerformed(evt);
+                kontakPentingButtonActionPerformed(evt);
             }
         });
 
-        listPegawaiButton.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
-        listPegawaiButton.setText("LIST PEGAWAI");
-        listPegawaiButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        listPegawaiButton.setMaximumSize(new java.awt.Dimension(146, 26));
-        listPegawaiButton.addActionListener(new java.awt.event.ActionListener() {
+        listPenghuniButton.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        listPenghuniButton.setText("LIST PENGHUNI");
+        listPenghuniButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        listPenghuniButton.setMaximumSize(new java.awt.Dimension(146, 26));
+        listPenghuniButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                listPegawaiButtonActionPerformed(evt);
+                listPenghuniButtonActionPerformed(evt);
             }
         });
 
-        gajiPegawaiButton.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
-        gajiPegawaiButton.setText("GAJI PEGAWAI");
-        gajiPegawaiButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        gajiPegawaiButton.setMaximumSize(new java.awt.Dimension(146, 26));
-        gajiPegawaiButton.addActionListener(new java.awt.event.ActionListener() {
+        cekPerizinanButton.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        cekPerizinanButton.setText("CEK PERIZINAN");
+        cekPerizinanButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cekPerizinanButton.setMaximumSize(new java.awt.Dimension(146, 26));
+        cekPerizinanButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                gajiPegawaiButtonActionPerformed(evt);
+                cekPerizinanButtonActionPerformed(evt);
             }
         });
 
-        cekPengeluaranButton.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
-        cekPengeluaranButton.setText("CEK PENGELUARAN");
-        cekPengeluaranButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cekPengeluaranButton.setMaximumSize(new java.awt.Dimension(146, 26));
-        cekPengeluaranButton.addActionListener(new java.awt.event.ActionListener() {
+        buatPengumumanButton.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        buatPengumumanButton.setText("BUAT PENGUMUMAN");
+        buatPengumumanButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        buatPengumumanButton.setMaximumSize(new java.awt.Dimension(146, 26));
+        buatPengumumanButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cekPengeluaranButtonActionPerformed(evt);
+                buatPengumumanButtonActionPerformed(evt);
             }
         });
 
-        beriMakanButton.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
-        beriMakanButton.setText("BERI MAKAN");
-        beriMakanButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        beriMakanButton.setMaximumSize(new java.awt.Dimension(146, 26));
-        beriMakanButton.addActionListener(new java.awt.event.ActionListener() {
+        kelolaAdminButton.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        kelolaAdminButton.setText("KELOLA ADMIN");
+        kelolaAdminButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        kelolaAdminButton.setMaximumSize(new java.awt.Dimension(146, 26));
+        kelolaAdminButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                beriMakanButtonActionPerformed(evt);
+                kelolaAdminButtonActionPerformed(evt);
             }
         });
 
-        beriVaksinButton.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
-        beriVaksinButton.setText("BERI VAKSIN");
-        beriVaksinButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        beriVaksinButton.setMaximumSize(new java.awt.Dimension(146, 26));
-        beriVaksinButton.addActionListener(new java.awt.event.ActionListener() {
+        pelaporanButton.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        pelaporanButton.setText("CEK PELAPORAN");
+        pelaporanButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        pelaporanButton.setMaximumSize(new java.awt.Dimension(146, 26));
+        pelaporanButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                beriVaksinButtonActionPerformed(evt);
-            }
-        });
-
-        beriObatButton.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
-        beriObatButton.setText("BERI PERAWATAN");
-        beriObatButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        beriObatButton.setMaximumSize(new java.awt.Dimension(146, 26));
-        beriObatButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                beriObatButtonActionPerformed(evt);
-            }
-        });
-
-        cekKapasitasButton.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
-        cekKapasitasButton.setText("CEK KAPASITAS");
-        cekKapasitasButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cekKapasitasButton.setMaximumSize(new java.awt.Dimension(146, 26));
-        cekKapasitasButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cekKapasitasButtonActionPerformed(evt);
+                pelaporanButtonActionPerformed(evt);
             }
         });
 
@@ -192,19 +184,19 @@ public class DashboardAdmin extends javax.swing.JPanel {
             .addGroup(panelDashboardLayout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addGroup(panelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(judul, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(beliButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jualButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(breedButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(listHewanButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(listPegawaiButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(gajiPegawaiButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cekPengeluaranButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(beriMakanButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(beriVaksinButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(beriObatButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cekKapasitasButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(34, Short.MAX_VALUE))
+                    .addComponent(addRenterButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cekPembayaranButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cekKamarButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(kontakPentingButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(listPenghuniButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cekPerizinanButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(buatPengumumanButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(kelolaAdminButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pelaporanButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDashboardLayout.createSequentialGroup()
+                        .addComponent(judul)
+                        .addGap(8, 8, 8)))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         panelDashboardLayout.setVerticalGroup(
             panelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -212,69 +204,59 @@ public class DashboardAdmin extends javax.swing.JPanel {
                 .addGap(17, 17, 17)
                 .addComponent(judul, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(beliButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(addRenterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jualButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(listPenghuniButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(breedButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cekPembayaranButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(listHewanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cekKamarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(listPegawaiButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cekPerizinanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(gajiPegawaiButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pelaporanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cekPengeluaranButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(buatPengumumanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(beriMakanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(kelolaAdminButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(beriVaksinButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(beriObatButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cekKapasitasButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addComponent(kontakPentingButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(103, Short.MAX_VALUE))
         );
 
         add(panelDashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 209, 500));
 
-        panelHewanSiapJual.setBackground(new java.awt.Color(221, 241, 247, 200));
+        panelHewanSiapJual.setBackground(new java.awt.Color(249, 251, 231, 199));
         panelHewanSiapJual.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         panelHewanSiapJual.setPreferredSize(new java.awt.Dimension(277, 199));
 
         judulHewanSiapJual.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
         judulHewanSiapJual.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        judulHewanSiapJual.setText("Hewan Siap Jual");
+        judulHewanSiapJual.setText("Jumlah Penghuni");
         judulHewanSiapJual.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        kambingSiapJual.setFont(new java.awt.Font("Comic Sans MS", 1, 36)); // NOI18N
-        kambingSiapJual.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        kambingSiapJual.setText("07");
+        jumlahPenghuniLabel.setFont(new java.awt.Font("Comic Sans MS", 1, 48)); // NOI18N
+        jumlahPenghuniLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jumlahPenghuniLabel.setText("07");
 
-        sapiSiapJual.setFont(new java.awt.Font("Comic Sans MS", 1, 36)); // NOI18N
-        sapiSiapJual.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        sapiSiapJual.setText("01");
-
-        dombaSiapJual.setFont(new java.awt.Font("Comic Sans MS", 1, 36)); // NOI18N
-        dombaSiapJual.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        dombaSiapJual.setText("10");
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/simpurna/asset/penghuni.png"))); // NOI18N
 
         javax.swing.GroupLayout panelHewanSiapJualLayout = new javax.swing.GroupLayout(panelHewanSiapJual);
         panelHewanSiapJual.setLayout(panelHewanSiapJualLayout);
         panelHewanSiapJualLayout.setHorizontalGroup(
             panelHewanSiapJualLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(judulHewanSiapJual, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelHewanSiapJualLayout.createSequentialGroup()
-                .addContainerGap(32, Short.MAX_VALUE)
-                .addComponent(sapiSiapJual, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(dombaSiapJual, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(kambingSiapJual, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+            .addComponent(judulHewanSiapJual, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
             .addGroup(panelHewanSiapJualLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(gambarHewanSiapJual)
+                .addGroup(panelHewanSiapJualLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelHewanSiapJualLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(gambarHewanSiapJual)
+                        .addGap(69, 69, 69)
+                        .addComponent(jumlahPenghuniLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelHewanSiapJualLayout.createSequentialGroup()
+                        .addGap(104, 104, 104)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelHewanSiapJualLayout.setVerticalGroup(
@@ -282,36 +264,34 @@ public class DashboardAdmin extends javax.swing.JPanel {
             .addGroup(panelHewanSiapJualLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(judulHewanSiapJual)
-                .addGap(18, 18, 18)
-                .addComponent(gambarHewanSiapJual)
-                .addGap(10, 10, 10)
-                .addGroup(panelHewanSiapJualLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(sapiSiapJual, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dombaSiapJual, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(kambingSiapJual, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addGroup(panelHewanSiapJualLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelHewanSiapJualLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(gambarHewanSiapJual))
+                    .addGroup(panelHewanSiapJualLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jumlahPenghuniLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         add(panelHewanSiapJual, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, 270, -1));
 
-        panelJumlahHewan.setBackground(new java.awt.Color(221, 241, 247, 200));
+        panelJumlahHewan.setBackground(new java.awt.Color(249, 251, 231, 199));
+        panelJumlahHewan.setForeground(new java.awt.Color(255, 255, 255));
         panelJumlahHewan.setPreferredSize(new java.awt.Dimension(277, 199));
 
         judulJumlahHewan.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
         judulJumlahHewan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        judulJumlahHewan.setText("Jumlah Hewan");
+        judulJumlahHewan.setText("Pembayaran Baru");
 
-        jumlahDomba.setFont(new java.awt.Font("Comic Sans MS", 1, 36)); // NOI18N
-        jumlahDomba.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jumlahDomba.setText("99");
+        pembayaranBaruLabel.setFont(new java.awt.Font("Comic Sans MS", 1, 48)); // NOI18N
+        pembayaranBaruLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        pembayaranBaruLabel.setText("56");
 
-        jumlahSapi.setFont(new java.awt.Font("Comic Sans MS", 1, 36)); // NOI18N
-        jumlahSapi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jumlahSapi.setText("38");
-
-        jumlahKambing.setFont(new java.awt.Font("Comic Sans MS", 1, 36)); // NOI18N
-        jumlahKambing.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jumlahKambing.setText("56");
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/simpurna/asset/pembayaran.png"))); // NOI18N
 
         javax.swing.GroupLayout panelJumlahHewanLayout = new javax.swing.GroupLayout(panelJumlahHewan);
         panelJumlahHewan.setLayout(panelJumlahHewanLayout);
@@ -321,105 +301,110 @@ public class DashboardAdmin extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(panelJumlahHewanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelJumlahHewanLayout.createSequentialGroup()
-                        .addComponent(judulJumlahHewan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(judulJumlahHewan, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelJumlahHewanLayout.createSequentialGroup()
-                        .addGap(0, 27, Short.MAX_VALUE)
-                        .addComponent(jumlahSapi, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(jumlahDomba, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(jumlahKambing, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(22, 22, 22))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(pembayaranBaruLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39))
                     .addGroup(panelJumlahHewanLayout.createSequentialGroup()
                         .addComponent(gambarJumlahHewan)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addGap(106, 106, 106))))
         );
         panelJumlahHewanLayout.setVerticalGroup(
             panelJumlahHewanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelJumlahHewanLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(judulJumlahHewan, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(gambarJumlahHewan)
-                .addGap(12, 12, 12)
-                .addGroup(panelJumlahHewanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jumlahSapi, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jumlahDomba, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jumlahKambing, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pembayaranBaruLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelJumlahHewanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelJumlahHewanLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(gambarJumlahHewan))
+                    .addGroup(panelJumlahHewanLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         add(panelJumlahHewan, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 70, -1, -1));
 
-        panelTotalPengeluaran.setBackground(new java.awt.Color(221, 241, 247, 200));
+        panelTotalPengeluaran.setBackground(new java.awt.Color(249, 251, 231, 199));
         panelTotalPengeluaran.setPreferredSize(new java.awt.Dimension(277, 134));
 
         judulTotalPengeluaran.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
         judulTotalPengeluaran.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        judulTotalPengeluaran.setText("Total Pengeluaran");
+        judulTotalPengeluaran.setText("Total Pelaporan");
 
-        totalPengeluaran.setFont(new java.awt.Font("Comic Sans MS", 1, 24)); // NOI18N
-        totalPengeluaran.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        totalPengeluaran.setText("Rp 1.000.000");
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/simpurna/asset/complaint.png"))); // NOI18N
+
+        pelaporanMasukLabel.setFont(new java.awt.Font("Comic Sans MS", 1, 48)); // NOI18N
+        pelaporanMasukLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        pelaporanMasukLabel.setText("56");
 
         javax.swing.GroupLayout panelTotalPengeluaranLayout = new javax.swing.GroupLayout(panelTotalPengeluaran);
         panelTotalPengeluaran.setLayout(panelTotalPengeluaranLayout);
         panelTotalPengeluaranLayout.setHorizontalGroup(
             panelTotalPengeluaranLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(judulTotalPengeluaran, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panelTotalPengeluaranLayout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(pelaporanMasukLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(46, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTotalPengeluaranLayout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
-                .addComponent(totalPengeluaran, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addGap(110, 110, 110))
         );
         panelTotalPengeluaranLayout.setVerticalGroup(
             panelTotalPengeluaranLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTotalPengeluaranLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(judulTotalPengeluaran)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pelaporanMasukLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(totalPengeluaran, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addComponent(jLabel4)
+                .addGap(45, 45, 45))
         );
 
-        add(panelTotalPengeluaran, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 300, -1, 170));
+        add(panelTotalPengeluaran, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 290, -1, 190));
 
-        panelHewanButuhTindakan.setBackground(new java.awt.Color(221, 241, 247, 200));
+        panelHewanButuhTindakan.setBackground(new java.awt.Color(249, 251, 231, 199));
         panelHewanButuhTindakan.setPreferredSize(new java.awt.Dimension(277, 134));
 
         judulHewanButuhTindakan.setFont(new java.awt.Font("Comic Sans MS", 0, 20)); // NOI18N
         judulHewanButuhTindakan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        judulHewanButuhTindakan.setText("Hewan Butuh Tindakan");
+        judulHewanButuhTindakan.setText("Perizinan Masuk");
 
-        sapiButuhTindakan.setFont(new java.awt.Font("Comic Sans MS", 1, 36)); // NOI18N
-        sapiButuhTindakan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        sapiButuhTindakan.setText("01");
+        perizinanMasukLabel.setFont(new java.awt.Font("Comic Sans MS", 1, 48)); // NOI18N
+        perizinanMasukLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        perizinanMasukLabel.setText("01");
 
-        kambingButuhTindakan.setFont(new java.awt.Font("Comic Sans MS", 1, 36)); // NOI18N
-        kambingButuhTindakan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        kambingButuhTindakan.setText("01");
-
-        dombaButuhTindakan.setFont(new java.awt.Font("Comic Sans MS", 1, 36)); // NOI18N
-        dombaButuhTindakan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        dombaButuhTindakan.setText("01");
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/simpurna/asset/izin.png"))); // NOI18N
 
         javax.swing.GroupLayout panelHewanButuhTindakanLayout = new javax.swing.GroupLayout(panelHewanButuhTindakan);
         panelHewanButuhTindakan.setLayout(panelHewanButuhTindakanLayout);
         panelHewanButuhTindakanLayout.setHorizontalGroup(
             panelHewanButuhTindakanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelHewanButuhTindakanLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(judulHewanButuhTindakan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelHewanButuhTindakanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelHewanButuhTindakanLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(judulHewanButuhTindakan, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE))
+                    .addGroup(panelHewanButuhTindakanLayout.createSequentialGroup()
+                        .addGap(108, 108, 108)
+                        .addComponent(jLabel3)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(panelHewanButuhTindakanLayout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(sapiButuhTindakan, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                .addComponent(dombaButuhTindakan, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(kambingButuhTindakan, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18))
+                .addGap(81, 81, 81)
+                .addComponent(perizinanMasukLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(panelHewanButuhTindakanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelHewanButuhTindakanLayout.createSequentialGroup()
                     .addGap(8, 8, 8)
@@ -429,43 +414,31 @@ public class DashboardAdmin extends javax.swing.JPanel {
         panelHewanButuhTindakanLayout.setVerticalGroup(
             panelHewanButuhTindakanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelHewanButuhTindakanLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(judulHewanButuhTindakan)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
-                .addGroup(panelHewanButuhTindakanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(sapiButuhTindakan, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(kambingButuhTindakan, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dombaButuhTindakan, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(perizinanMasukLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addGap(22, 22, 22))
             .addGroup(panelHewanButuhTindakanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelHewanButuhTindakanLayout.createSequentialGroup()
                     .addGap(55, 55, 55)
                     .addComponent(gambarHewanSiapJual1)
-                    .addContainerGap(115, Short.MAX_VALUE)))
+                    .addContainerGap(145, Short.MAX_VALUE)))
         );
 
-        add(panelHewanButuhTindakan, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 300, 270, 170));
-
-        akunButton.setBackground(new java.awt.Color(204, 204, 204));
-        akunButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/simpurna/asset/profil (2).png"))); // NOI18N
-        akunButton.setBorder(null);
-        akunButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        akunButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                akunButtonMouseEntered(evt);
-            }
-        });
-        akunButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                akunButtonActionPerformed(evt);
-            }
-        });
-        add(akunButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 10, 50, 50));
+        add(panelHewanButuhTindakan, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 290, 270, 190));
 
         logoutButton.setBackground(new java.awt.Color(204, 204, 204));
         logoutButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/simpurna/asset/logout.png"))); // NOI18N
         logoutButton.setBorder(null);
         logoutButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        logoutButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                logoutButtonMouseEntered(evt);
+            }
+        });
         logoutButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 logoutButtonActionPerformed(evt);
@@ -477,117 +450,235 @@ public class DashboardAdmin extends javax.swing.JPanel {
         add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 500));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void beliButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_beliButtonActionPerformed
+    private void addRenterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addRenterButtonActionPerformed
+        AddRenter ar = new AddRenter();
+   
+        JFrame parentWindow = (JFrame) SwingUtilities.getWindowAncestor(this);
+
+        parentWindow.getContentPane().remove(this);
+
+        parentWindow.getContentPane().add(ar);
+
+        parentWindow.pack();
         
-    }//GEN-LAST:event_beliButtonActionPerformed
+        parentWindow.setLocationRelativeTo(null);
 
-    private void jualButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jualButtonActionPerformed
+        ar.setVisible(true);
+    }//GEN-LAST:event_addRenterButtonActionPerformed
+
+    private void cekPembayaranButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cekPembayaranButtonActionPerformed
         // TODO add your handling code here:
+        PembayaranAdmin pa = new PembayaranAdmin();
+   
+        JFrame parentWindow = (JFrame) SwingUtilities.getWindowAncestor(this);
 
-    }//GEN-LAST:event_jualButtonActionPerformed
+        parentWindow.getContentPane().remove(this);
 
-    private void breedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_breedButtonActionPerformed
+        parentWindow.getContentPane().add(pa);
 
+        parentWindow.pack();
+        
+        parentWindow.setLocationRelativeTo(null);
+
+        pa.setVisible(true);
+    }//GEN-LAST:event_cekPembayaranButtonActionPerformed
+
+    private void cekKamarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cekKamarButtonActionPerformed
+        CekKamar ck = new CekKamar();
+   
+        JFrame parentWindow = (JFrame) SwingUtilities.getWindowAncestor(this);
+
+        parentWindow.getContentPane().remove(this);
+
+        parentWindow.getContentPane().add(ck);
+
+        parentWindow.pack();
+        
+        parentWindow.setLocationRelativeTo(null);
+
+        ck.setVisible(true);
      
-    }//GEN-LAST:event_breedButtonActionPerformed
+    }//GEN-LAST:event_cekKamarButtonActionPerformed
 
-    private void listHewanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listHewanButtonActionPerformed
+    private void kontakPentingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kontakPentingButtonActionPerformed
         // TODO add your handling code here:
+        KontakPentingAdmin kp = new KontakPentingAdmin();
+
+        JFrame parentWindow = (JFrame) SwingUtilities.getWindowAncestor(this);
+
+        parentWindow.getContentPane().remove(this);
+
+        parentWindow.getContentPane().add(kp);
+
+        parentWindow.pack();
+
+        parentWindow.setLocationRelativeTo(null);
+
+        kp.setVisible(true);
+
         
-    }//GEN-LAST:event_listHewanButtonActionPerformed
+    }//GEN-LAST:event_kontakPentingButtonActionPerformed
 
-    private void listPegawaiButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listPegawaiButtonActionPerformed
+    private void listPenghuniButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listPenghuniButtonActionPerformed
         // TODO add your handling code here:
-      
-    }//GEN-LAST:event_listPegawaiButtonActionPerformed
+        ListRenter listRenter= new ListRenter();
+   
+        JFrame parentWindow = (JFrame) SwingUtilities.getWindowAncestor(this);
 
-    private void gajiPegawaiButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gajiPegawaiButtonActionPerformed
+        parentWindow.getContentPane().remove(this);
+
+        parentWindow.getContentPane().add(listRenter);
+
+        parentWindow.pack();
+        
+        parentWindow.setLocationRelativeTo(null);
+
+        listRenter.setVisible(true);
+    }//GEN-LAST:event_listPenghuniButtonActionPerformed
+
+    private void cekPerizinanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cekPerizinanButtonActionPerformed
         // TODO add your handling code here:
+        PerizinanAdmin perizinanAdmin = new PerizinanAdmin();
+   
+        JFrame parentWindow = (JFrame) SwingUtilities.getWindowAncestor(this);
+
+        parentWindow.getContentPane().remove(this);
+
+        parentWindow.getContentPane().add(perizinanAdmin);
+
+        parentWindow.pack();
+        
+        parentWindow.setLocationRelativeTo(null);
+
+        perizinanAdmin.setVisible(true);
        
-    }//GEN-LAST:event_gajiPegawaiButtonActionPerformed
+    }//GEN-LAST:event_cekPerizinanButtonActionPerformed
 
-    private void cekPengeluaranButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cekPengeluaranButtonActionPerformed
+    private void buatPengumumanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buatPengumumanButtonActionPerformed
         // TODO add your handling code here:
+        PengumumanAdmin pa = new PengumumanAdmin();
+   
+        JFrame parentWindow = (JFrame) SwingUtilities.getWindowAncestor(this);
+
+        parentWindow.getContentPane().remove(this);
+
+        parentWindow.getContentPane().add(pa);
+
+        parentWindow.pack();
+        
+        parentWindow.setLocationRelativeTo(null);
+
+        pa.setVisible(true);
   
-    }//GEN-LAST:event_cekPengeluaranButtonActionPerformed
+    }//GEN-LAST:event_buatPengumumanButtonActionPerformed
 
-    private void beriMakanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_beriMakanButtonActionPerformed
+    private void kelolaAdminButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kelolaAdminButtonActionPerformed
         // TODO add your handling code here:
+        ListAdmin la = new ListAdmin();
+   
+        JFrame parentWindow = (JFrame) SwingUtilities.getWindowAncestor(this);
 
+        parentWindow.getContentPane().remove(this);
 
-    }//GEN-LAST:event_beriMakanButtonActionPerformed
+        parentWindow.getContentPane().add(la);
 
-    private void beriVaksinButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_beriVaksinButtonActionPerformed
+        parentWindow.pack();
+        
+        parentWindow.setLocationRelativeTo(null);
+
+        la.setVisible(true);
+
+    }//GEN-LAST:event_kelolaAdminButtonActionPerformed
+
+    private void pelaporanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pelaporanButtonActionPerformed
         // TODO add your handling code here:
+        LaporanAdmin la = new LaporanAdmin();
 
+        JFrame parentWindow = (JFrame) SwingUtilities.getWindowAncestor(this);
 
-    }//GEN-LAST:event_beriVaksinButtonActionPerformed
+        parentWindow.getContentPane().remove(this);
 
-    private void beriObatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_beriObatButtonActionPerformed
-        // TODO add your handling code here:
+        parentWindow.getContentPane().add(la);
 
-    }//GEN-LAST:event_beriObatButtonActionPerformed
+        parentWindow.pack();
 
-    private void cekKapasitasButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cekKapasitasButtonActionPerformed
-        // TODO add your handling code here:
+        parentWindow.setLocationRelativeTo(null);
 
-    }//GEN-LAST:event_cekKapasitasButtonActionPerformed
+        la.setVisible(true);
 
-    private void akunButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_akunButtonActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_akunButtonActionPerformed
+    }//GEN-LAST:event_pelaporanButtonActionPerformed
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
         // TODO add your handling code here:
+        Session session = Session.getInstance();
+        session.clearSession();
+        
+        Login login = new Login();
+   
+        JFrame parentWindow = (JFrame) SwingUtilities.getWindowAncestor(this);
 
+        parentWindow.setVisible(false);
+        
+        login.setVisible(true);
+        
+        login.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_logoutButtonActionPerformed
 
-    private void akunButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_akunButtonMouseEntered
+    private void logoutButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseEntered
         // TODO add your handling code here:
         JButton button = (JButton) evt.getSource();
-        button.setToolTipText("Ke halaman profil");
+        button.setToolTipText("Keluar");
         ToolTipManager.sharedInstance().setInitialDelay(0);
-    }//GEN-LAST:event_akunButtonMouseEntered
-
+    }//GEN-LAST:event_logoutButtonMouseEntered
+   
+    public JLabel getJmlPenghuniLabel() {
+        return jumlahPenghuniLabel;
+    }
+    
+    public JLabel getPembayaranBaruLabel() {
+        return pembayaranBaruLabel;
+    }
+    
+    public JLabel getPerizinanMasuk() {
+        return perizinanMasukLabel;
+    }
+    
+    public JLabel getPelaporanMasuk() {
+        return pelaporanMasukLabel;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton akunButton;
+    private javax.swing.JButton addRenterButton;
     private javax.swing.JLabel background;
-    private javax.swing.JButton beliButton;
-    private javax.swing.JButton beriMakanButton;
-    private javax.swing.JButton beriObatButton;
-    private javax.swing.JButton beriVaksinButton;
-    private javax.swing.JButton breedButton;
-    private javax.swing.JButton cekKapasitasButton;
-    private javax.swing.JButton cekPengeluaranButton;
-    private javax.swing.JLabel dombaButuhTindakan;
-    private javax.swing.JLabel dombaSiapJual;
-    private javax.swing.JButton gajiPegawaiButton;
+    private javax.swing.JButton buatPengumumanButton;
+    private javax.swing.JButton cekKamarButton;
+    private javax.swing.JButton cekPembayaranButton;
+    private javax.swing.JButton cekPerizinanButton;
     private javax.swing.JLabel gambarHewanSiapJual;
     private javax.swing.JLabel gambarHewanSiapJual1;
     private javax.swing.JLabel gambarJumlahHewan;
-    private javax.swing.JButton jualButton;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel judul;
     private javax.swing.JLabel judulHewanButuhTindakan;
     private javax.swing.JLabel judulHewanSiapJual;
     private javax.swing.JLabel judulJumlahHewan;
     private javax.swing.JLabel judulTotalPengeluaran;
-    private javax.swing.JLabel jumlahDomba;
-    private javax.swing.JLabel jumlahKambing;
-    private javax.swing.JLabel jumlahSapi;
-    private javax.swing.JLabel kambingButuhTindakan;
-    private javax.swing.JLabel kambingSiapJual;
-    private javax.swing.JButton listHewanButton;
-    private javax.swing.JButton listPegawaiButton;
+    private javax.swing.JLabel jumlahPenghuniLabel;
+    private javax.swing.JButton kelolaAdminButton;
+    private javax.swing.JButton kontakPentingButton;
+    private javax.swing.JButton listPenghuniButton;
     private javax.swing.JButton logoutButton;
     private javax.swing.JPanel panelDashboard;
     private javax.swing.JPanel panelHewanButuhTindakan;
     private javax.swing.JPanel panelHewanSiapJual;
     private javax.swing.JPanel panelJumlahHewan;
     private javax.swing.JPanel panelTotalPengeluaran;
-    private javax.swing.JLabel sapiButuhTindakan;
-    private javax.swing.JLabel sapiSiapJual;
-    private javax.swing.JLabel totalPengeluaran;
+    private javax.swing.JButton pelaporanButton;
+    private javax.swing.JLabel pelaporanMasukLabel;
+    private javax.swing.JLabel pembayaranBaruLabel;
+    private javax.swing.JLabel perizinanMasukLabel;
     // End of variables declaration//GEN-END:variables
 }
